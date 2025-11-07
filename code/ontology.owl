@@ -1,0 +1,279 @@
+@prefix : <http://www.example.org/indoornav#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.example.org/indoornav#> .
+
+<http://www.example.org/indoornav#室内导航本体> rdf:type owl:Ontology ;
+                                           rdfs:label "室内导航本体" .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.example.org/indoornav#位于
+:位于 rdf:type owl:ObjectProperty ;
+    rdfs:domain :设施层 ;
+    rdfs:range :空间布局层 ;
+    rdfs:comment "设施在功能区的物理位置" .
+
+###  http://www.example.org/indoornav#依赖于
+:依赖于 rdf:type owl:ObjectProperty ;
+     rdfs:domain :空间区域 ;
+     rdfs:range :通行区域 ;
+     rdfs:comment "空间区域依赖通行区域" .
+
+###  http://www.example.org/indoornav#具有属性
+:具有属性 rdf:type owl:ObjectProperty ;
+      rdfs:domain [ rdf:type owl:Class ;
+                    owl:unionOf ( :空间布局层
+                                  :设施层
+                                )
+                  ] ;
+      rdfs:range :信息层 ;
+      rdfs:comment "实体与属性的关联" .
+
+###  http://www.example.org/indoornav#具有语义映射
+:具有语义映射 rdf:type owl:ObjectProperty ;
+        rdfs:domain :空间布局层 ;
+        rdfs:range :信息层 ;
+        rdfs:comment "空间实体的语义映射" .
+
+###  http://www.example.org/indoornav#包含
+:包含 rdf:type owl:ObjectProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( :功能区域
+                                :空间区域
+                              )
+                ] ;
+    rdfs:comment "区域包含兴趣点" .
+
+###  http://www.example.org/indoornav#可通过到达
+:可通过到达 rdf:type owl:ObjectProperty ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :功能区域
+                                   :空间区域
+                                 )
+                   ] ;
+       rdfs:range [ rdf:type owl:Class ;
+                    owl:unionOf ( :功能区域
+                                  :空间区域
+                                )
+                  ] ;
+       rdfs:comment "通过通行区域可达" .
+
+###  http://www.example.org/indoornav#支持
+:支持 rdf:type owl:ObjectProperty ;
+    rdfs:domain :功能区域 ;
+    rdfs:range :空间区域 ;
+    rdfs:comment "功能区域支持空间区域" .
+
+###  http://www.example.org/indoornav#物理连通
+:物理连通 rdf:type owl:ObjectProperty ;
+      rdfs:domain :通行区域 ;
+      rdfs:range :通行区域 ;
+      rdfs:comment "通行区域间的物理连通" .
+
+###  http://www.example.org/indoornav#相邻于
+:相邻于 rdf:type owl:ObjectProperty ;
+     rdfs:domain :空间布局层 ;
+     rdfs:range :空间布局层 ;
+     rdfs:comment "空间单元的邻接关系" .
+
+###  http://www.example.org/indoornav#连接到
+:连接到 rdf:type owl:ObjectProperty ;
+     rdfs:domain :通行区域 ;
+     rdfs:range :功能区域 ;
+     rdfs:comment "通行区域连接功能区域" .
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.example.org/indoornav#产权方
+:产权方 rdf:type owl:DatatypeProperty ;
+     rdfs:domain :基础元数据 .
+
+###  http://www.example.org/indoornav#人流量
+:人流量 rdf:type owl:DatatypeProperty ;
+     rdfs:domain :动态信息 .
+
+###  http://www.example.org/indoornav#可访问时段
+:可访问时段 rdf:type owl:DatatypeProperty ;
+       rdfs:domain :动态信息 .
+
+###  http://www.example.org/indoornav#品牌
+:品牌 rdf:type owl:DatatypeProperty ;
+    rdfs:domain :商铺信息 .
+
+###  http://www.example.org/indoornav#商铺类型
+:商铺类型 rdf:type owl:DatatypeProperty ;
+      rdfs:domain :商铺信息 .
+
+###  http://www.example.org/indoornav#客服电话
+:客服电话 rdf:type owl:DatatypeProperty ;
+      rdfs:domain :商铺信息 .
+
+###  http://www.example.org/indoornav#建筑年代
+:建筑年代 rdf:type owl:DatatypeProperty ;
+      rdfs:domain :基础元数据 .
+
+###  http://www.example.org/indoornav#承载人数
+:承载人数 rdf:type owl:DatatypeProperty ;
+      rdfs:domain :中庭区域 ,
+                  :垂直交通 .
+
+###  http://www.example.org/indoornav#收银机数量
+:收银机数量 rdf:type owl:DatatypeProperty ;
+       rdfs:domain :空间设施 .
+
+###  http://www.example.org/indoornav#活动状态
+:活动状态 rdf:type owl:DatatypeProperty ;
+      rdfs:domain :中庭区域 .
+
+###  http://www.example.org/indoornav#评分
+:评分 rdf:type owl:DatatypeProperty ;
+    rdfs:domain :商铺信息 .
+
+###  http://www.example.org/indoornav#采光类型
+:采光类型 rdf:type owl:DatatypeProperty ;
+      rdfs:domain :中庭区域 .
+
+###  http://www.example.org/indoornav#面积
+:面积 rdf:type owl:DatatypeProperty ;
+    rdfs:domain :空间区域 .
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.example.org/indoornav#中庭区域
+:中庭区域 rdf:type owl:Class ;
+      rdfs:subClassOf :空间区域 ;
+      rdfs:comment "建筑内部的开放核心区" .
+
+###  http://www.example.org/indoornav#休息区域
+:休息区域 rdf:type owl:Class ;
+      rdfs:subClassOf :空间区域 ;
+      rdfs:comment "配备休息设施的公共服务区" .
+
+###  http://www.example.org/indoornav#促销信息
+:促销信息 rdf:type owl:Class ;
+      rdfs:subClassOf :动态信息 .
+
+###  http://www.example.org/indoornav#信息层
+:信息层 rdf:type owl:Class ;
+     rdfs:subClassOf owl:Thing .
+
+###  http://www.example.org/indoornav#公共服务区域
+:公共服务区域 rdf:type owl:Class ;
+        rdfs:subClassOf :功能区域 ;
+        rdfs:comment "提供卫生服务的区域" .
+
+###  http://www.example.org/indoornav#公共通道
+:公共通道 rdf:type owl:Class ;
+      rdfs:subClassOf :通行区域 .
+
+###  http://www.example.org/indoornav#功能区域
+:功能区域 rdf:type owl:Class ;
+      rdfs:subClassOf :空间布局层 ;
+      rdfs:comment "提供特定服务的区域" .
+
+###  http://www.example.org/indoornav#动态信息
+:动态信息 rdf:type owl:Class ;
+      rdfs:subClassOf :信息层 ;
+      rdfs:comment "动态状态信息" .
+
+###  http://www.example.org/indoornav#卫生间区域
+:卫生间区域 rdf:type owl:Class ;
+       rdfs:subClassOf :空间区域 ;
+       rdfs:comment "提供卫生服务的功能区域" .
+
+###  http://www.example.org/indoornav#后勤区
+:后勤区 rdf:type owl:Class ;
+     rdfs:subClassOf :功能区域 ;
+     rdfs:comment "提供后勤保障的区域" .
+
+###  http://www.example.org/indoornav#商铺信息
+:商铺信息 rdf:type owl:Class ;
+      rdfs:subClassOf :基本信息 .
+
+###  http://www.example.org/indoornav#商铺区域
+:商铺区域 rdf:type owl:Class ;
+      rdfs:subClassOf :空间区域 ;
+      rdfs:comment "具有明确经营主体的独立单元" .
+
+###  http://www.example.org/indoornav#垂直交通
+:垂直交通 rdf:type owl:Class ;
+      rdfs:subClassOf :通行区域 ;
+      rdfs:comment "垂直交通设施" .
+
+###  http://www.example.org/indoornav#基本信息
+:基本信息 rdf:type owl:Class ;
+      rdfs:subClassOf :信息层 ;
+      rdfs:comment "静态属性信息" .
+
+###  http://www.example.org/indoornav#基础元数据
+:基础元数据 rdf:type owl:Class ;
+       rdfs:subClassOf :基本信息 .
+
+###  http://www.example.org/indoornav#娱乐区
+:娱乐区 rdf:type owl:Class ;
+     rdfs:subClassOf :商铺区域 ;
+     rdfs:comment "提供娱乐的区域" .
+
+###  http://www.example.org/indoornav#安全设施
+:安全设施 rdf:type owl:Class ;
+      rdfs:subClassOf :设施层 ;
+      rdfs:comment "安全防护设施" .
+
+###  http://www.example.org/indoornav#定位设施
+:定位设施 rdf:type owl:Class ;
+      rdfs:subClassOf :设施层 .
+
+###  http://www.example.org/indoornav#服务设施
+:服务设施 rdf:type owl:Class ;
+      rdfs:subClassOf :设施层 ;
+      rdfs:comment "服务支持设施" .
+
+###  http://www.example.org/indoornav#服饰区
+:服饰区 rdf:type owl:Class ;
+     rdfs:subClassOf :商铺区域 ;
+     rdfs:comment "提供展示和销售服装、配饰及相关产品的区域" .
+
+###  http://www.example.org/indoornav#状态
+:状态 rdf:type owl:Class ;
+rdfs:subClassOf :动态信息 .
+###  http://www.example.org/indoornav#空间区域
+:空间区域 rdf:type owl:Class ;
+      rdfs:subClassOf :空间布局层 ;
+      rdfs:comment "基础空间划分单元" .
+
+###  http://www.example.org/indoornav#空间布局层
+:空间布局层 rdf:type owl:Class ;
+       rdfs:subClassOf owl:Thing .
+
+###  http://www.example.org/indoornav#空间设施
+:空间设施 rdf:type owl:Class ;
+      rdfs:subClassOf :设施层 ;
+      rdfs:comment "空间功能设施" .
+
+###  http://www.example.org/indoornav#设施层
+:设施层 rdf:type owl:Class ;
+     rdfs:subClassOf owl:Thing .
+
+###  http://www.example.org/indoornav#通行区域
+:通行区域 rdf:type owl:Class ;
+      rdfs:subClassOf :空间布局层 ;
+      rdfs:comment "空间连通性结构" .
+
+###  http://www.example.org/indoornav#通行权限
+:通行权限 rdf:type owl:Class ;
+      rdfs:subClassOf :动态信息 .
+
+###  http://www.example.org/indoornav#餐饮区
+:餐饮区 rdf:type owl:Class ;
+     rdfs:subClassOf :商铺区域 ;
+     rdfs:comment "提供餐饮服务的区域" .
